@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PW Courses Coupon Wallah - Improved</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Sidebar transition */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Hide scrollbar for trending container */
+        .trending-container::-webkit-scrollbar {
+            display: none;
+        }
+        .trending-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Simple fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-section {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        /* Copied message animation */
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0; transform: scale(0.9); }
+        }
+        .copied-message.active {
+            display: inline-block;
+            animation: fadeOut 2s forwards;
+        }
+        /* Ensure header nav wraps on smaller desktop screens if needed */
+        .header-nav {
+            flex-wrap: wrap;
+        }
+        /* Code reveal styles */
+        .code-container {
+            position: relative;
+            display: inline-block;
+            width: 160px;
+        }
+        .code-text {
+            display: inline-block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: #e5e7eb;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            color: #1f2937;
+            text-align: center;
+            transition: filter 0.3s ease;
+        }
+        .code-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(14, 191, 255, 0.8), rgba(99, 102, 241, 0.8));
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.3s ease, height 0.3s ease, backdrop-filter 0.3s ease;
+        }
+        .code-container.revealed .code-overlay {
+            opacity: 0;
+            height: 0;
+            backdrop-filter: none;
+            pointer-events: none;
+        }
+        .code-container.revealed .code-text {
+            user-select: text;
+            filter: blur(0px);
+        }
+        .original-copy-button {
+            width: 160px;
+            padding: 0.75rem 1rem;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .original-copy-button:hover {
+            background: #1d4ed8;
+        }
+        .whatsapp-button {
+            width: 160px;
+            padding: 0.75rem 1rem;
+            background: #25D366;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .whatsapp-button:hover {
+            background: #20b358;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-blue-600 text-white py-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://placehold.co/120x40/0078d7/ffffff?text=PW+Logo"
+                     onerror="this.onerror=null; this.src='https://placehold.co/120x40/cccccc/ffffff?text=Logo+Error';"
+                     alt="PW Logo" class="h-10 rounded">
+                <h1 class="text-xl md:text-2xl font-bold">PW Coupon Wallah</h1>
+            </div>
+
+            <nav class="hidden md:flex space-x-2 header-nav justify-center flex-grow max-w-4xl">
+                <a href="#jee" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">JEE</a>
+                <a href="#neet" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">NEET</a>
+                <a href="#upsc" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">UPSC</a>
+                <a href="#gate" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">GATE</a>
+                <a href="#ssc" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">SSC</a>
+                <a href="#banking" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">Banking</a>
+                <a href="#skills" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">Skills</a>
+                <a href="#commerce" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">Commerce</a>
+                <a href="#foundation" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">Foundation</a>
+                <a href="#others" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">Others</a>
+                <a href="#aboutSection" class="hover:text-blue-200 px-2 py-2 rounded-md text-sm font-medium">About</a>
+            </nav>
+
+            <button id="menu-btn" class="md:hidden p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="sidebar" class="fixed inset-y-0 right-0 w-64 bg-blue-600 text-white p-6 transform translate-x-full md:hidden z-40 shadow-lg rounded-l-lg" role="dialog" aria-modal="true" aria-labelledby="sidebar-title"> 
+        <div class="flex justify-between items-center mb-6">
+            <h2 id="sidebar-title" class="text-lg font-semibold">Navigation</h2>
+            <button id="close-btn" class="p-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav>
+            <ul class="space-y-2"> 
+                <li><a href="#jee" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">JEE</a></li>
+                <li><a href="#neet" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">NEET</a></li>
+                <li><a href="#upsc" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">UPSC</a></li>
+                <li><a href="#gate" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">GATE</a></li>
+                <li><a href="#ssc" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">SSC</a></li>
+                <li><a href="#banking" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">Banking</a></li>
+                <li><a href="#skills" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">Skills</a></li>
+                <li><a href="#commerce" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">Commerce</a></li>
+                <li><a href="#foundation" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">Foundation</a></li>
+                <li><a href="#others" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">Others</a></li>
+                <li><a href="#aboutSection" class="block px-3 py-2 rounded-md hover:bg-blue-700 sidebar-link">About</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+
+    <main class="container mx-auto px-4 py-8 pt-24 md:pt-8"> 
+
+        <section class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">Latest Best Discount Offer Coupons!</h2>
+            <p class="text-lg text-gray-600">Find the latest exclusive coupon codes right here.</p>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-semibold text-center text-blue-600 mb-6">🔥Today PW Trending Coupons</h2>
+            <div class="trending-container flex overflow-x-auto space-x-4 md:space-x-6 pb-4 snap-x snap-mandatory">
+        
+                <div class="trending-card flex-shrink-0 w-60 md:w-72 bg-white p-4 rounded-lg shadow-md snap-start text-center border border-gray-200">
+                    <img src="https://placehold.co/250x150/e2e8f0/334155?text=Trending+JEE"
+                         onerror="this.onerror=null; this.src='https://placehold.co/250x150/cccccc/ffffff?text=Img+Error';"
+                         alt="Trending JEE Course" class="w-full h-32 object-cover rounded-md mb-3">
+                    <h3 class="font-semibold text-lg mb-1 text-gray-700">PW JEE Advance</h3>
+                    <p class="text-green-600 font-bold text-xl mb-3">60% Off</p>
+                    <div class="w-full flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="TRENDJEE60" data-target-id="copiedTrending1">
+                            <div class="code-text select-none filter blur-sm">TRENDJEE60</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedTrending1" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+        
+                <div class="trending-card flex-shrink-0 w-60 md:w-72 bg-white p-4 rounded-lg shadow-md snap-start text-center border border-gray-200">
+                    <img src="https://placehold.co/250x150/e2e8f0/334155?text=Trending+NEET"
+                         onerror="this.onerror=null; this.src='https://placehold.co/250x150/cccccc/ffffff?text=Img+Error';"
+                         alt="Trending NEET Course" class="w-full h-32 object-cover rounded-md mb-3">
+                    <h3 class="font-semibold text-lg mb-1 text-gray-700">NEET Booster Pack</h3>
+                    <p class="text-green-600 font-bold text-xl mb-3">45% Off</p>
+                    <div class="w-full flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="TRENDNEET45" data-target-id="copiedTrending2">
+                            <div class="code-text select-none filter blur-sm">TRENDNEET45</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedTrending2" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+        
+                <div class="trending-card flex-shrink-0 w-60 md:w-72 bg-white p-4 rounded-lg shadow-md snap-start text-center border border-gray-200">
+                    <img src="https://placehold.co/250x150/e2e8f0/334155?text=Trending+Skills"
+                         onerror="this.onerror=null; this.src='https://placehold.co/250x150/cccccc/ffffff?text=Img+Error';"
+                         alt="Trending Skills Course" class="w-full h-32 object-cover rounded-md mb-3">
+                    <h3 class="font-semibold text-lg mb-1 text-gray-700">PW Skills Combo</h3>
+                    <p class="text-green-600 font-bold text-xl mb-3">70% Off</p>
+                    <div class="w-full flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="TRENDSKILL70" data-target-id="copiedTrending3">
+                            <div class="code-text select-none filter blur-sm">TRENDSKILL70</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedTrending3" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+        
+                <div class="trending-card flex-shrink-0 w-60 md:w-72 bg-white p-4 rounded-lg shadow-md snap-start text-center border border-gray-200">
+                    <img src="https://placehold.co/250x150/e2e8f0/334155?text=Trending+GATE"
+                         onerror="this.onerror=null; this.src='https://placehold.co/250x150/cccccc/ffffff?text=Img+Error';"
+                         alt="Trending GATE Course" class="w-full h-32 object-cover rounded-md mb-3">
+                    <h3 class="font-semibold text-lg mb-1 text-gray-700">GATE Rank Booster</h3>
+                    <p class="text-green-600 font-bold text-xl mb-3">55% Off</p>
+                    <div class="w-full flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="TRENDGATE55" data-target-id="copiedTrending4">
+                            <div class="code-text select-none filter blur-sm">TRENDGATE55</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="wrap-text whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedTrending4" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+        
+            </div>
+        </section>
+        
+        <div class="space-y-10">
+            <section id="jee" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">JEE Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=JEE+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="JEE Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">JEE Full Course</h3>
+                        <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">50% off</span> on PW JEE Full Course!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="JEE50" data-target-id="copiedJEE">
+                            <div class="code-text select-none filter blur-sm">JEE50</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedJEE" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="neet" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">NEET Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=NEET+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="NEET Course" class="w-default md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">NEET Full Course</h3>
+                        <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">40% off</span> on PW NEET Full Course!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="NEET40" data-target-id="copiedNEET">
+                            <div class="code-text select-none filter blur-sm">NEET40</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedNEET" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="upsc" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">UPSC Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=UPSC+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="UPSC Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">UPSC Complete Pack</h3>
+                        <p class="text-gray-600 mb-3">Flat <span class="font-bold text-green-600">35% discount</span> for UPSC courses!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="UPSC35" data-target-id="copiedUPSC">
+                            <div class="code-text select-none filter blur-sm">UPSC35</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedUPSC" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gate" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">GATE Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=GATE+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="GATE Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">GATE Achievers Batch</h3>
+                        <p class="text-gray-600 mb-3">Special <span class="font-bold text-green-600">40% off</span> for early birds!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="GATE40" data-target-id="copiedGATE">
+                            <div class="code-text select-none filter blur-sm">GATE40</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedGATE" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ssc" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">SSC Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=SSC+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="PW SSC Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">SSC CGL Master Course</h3>
+                        <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">25% off</span> + Free Mock Tests!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="SSC25" data-target-id="copiedSSC">
+                            <div class="code-text select-none filter blur-sm">SSC25</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedSSC" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="banking" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">Banking Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=Banking+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="Banking Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">IBPS PO/Clerk Prep</h3>
+                        <p class="text-gray-600 mb-3">Save <span class="font-bold text-green-600">30%</span> on comprehensive banking prep.</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="BANK30" data-target-id="copiedBanking">
+                            <div class="code-text select-none filter blur-sm">BANK30</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedBanking" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">PW Skills Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=Skills+Course"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="Skills Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">Data Science & Web Dev</h3>
+                        <p class="text-gray-600 mb-3">Massive <span class="font-bold text-green-600">70% off</span> on PW Skills courses!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="SKILL70" data-target-id="copiedSkills">
+                            <div class="code-text select-none filter blur-sm">SKILL70</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedSkills" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="commerce" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">Commerce Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=Commerce"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="Commerce Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">Class 11/12 Commerce</h3>
+                        <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">20% off</span> on all Commerce batches.</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="COMM20" data-target-id="copiedCommerce">
+                            <div class="code-text select-none filter blur-sm">COMM20</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedCommerce" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="foundation" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">Foundation Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=Foundation"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="Foundation Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">Foundation Course (Class 8-10)</h3>
+                        <p class="text-gray-600 mb-3">Save <span class="font-bold text-green-600">30%</span> on Foundation courses!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="FOUND30" data-target-id="copiedFoundation">
+                            <div class="code-text select-none filter blur-sm">FOUND30</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedFoundation" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="others" class="scroll-mt-20 md:scroll-mt-16">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">Other Courses Coupons</h2>
+                <div class="coupon bg-white p-4 md:p-6 rounded-lg shadow-md border border-gray-200 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="https://placehold.co/150x100/e0f2fe/0ea5e9?text=Other+Exams"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
+                         alt="Other Courses" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-semibold text-blue-600 mb-1">Defence/Teaching/State PSC</h3>
+                        <p class="text-gray-600 mb-3">Grab <span class="font-bold text-green-600">15% extra off</span> on various other exam preps!</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-col items-center space-y-2">
+                        <div class="code-container" data-code="OTHER15" data-target-id="copiedOthers">
+                            <div class="code-text select-none filter blur-sm">OTHER15</div>
+                            <div class="code-overlay">Click to Reveal</div>
+                        </div>
+                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
+                        <span id="copiedOthers" class="copied-message text-green-500 text-sm hidden">Copied!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="aboutSection" class="about-section scroll-mt-20 md:scroll-mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 md:p-8 rounded-lg shadow">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">About Us</h2>
+                <p class="text-gray-600 leading-relaxed">At Coupon Wallah, we aim to bring the best discounts for Physics Wallah students. Our team diligently collects and verifies the latest coupons to ensure you save more on your educational journey. We believe quality education should be accessible and affordable.</p>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>© <span id="current-year"></span> PW Coupon Wallah. All rights reserved.</p>
+            <p class="text-sm mt-1">Disclaimer: This is an unofficial site providing coupon information.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- DOM Elements ---
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        const aboutSection = document.querySelector('.about-section');
+        const currentYearSpan = document.getElementById('current-year');
+
+        // --- Functions ---
+        /**
+         * Toggles the visibility of the sidebar and overlay.
+         */
+        function toggleSidebar() {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                const firstFocusableElement = sidebar.querySelector('a, button');
+                if (firstFocusableElement) {
+                    firstFocusableElement.focus();
+                } else {
+                    closeBtn.focus();
+                }
+            } else {
+                menuBtn.focus();
+            }
+        }
+
+        /**
+         * Copies the provided text to the clipboard and shows a confirmation message.
+         * @param {string} text - The text to copy.
+         * @param {string} elementId - The ID of the element to display the confirmation message.
+         */
+        function copyToClipboard(text, elementId) {
+            if (!navigator.clipboard) {
+                console.error("Clipboard API not available.");
+                const targetElement = document.getElementById(elementId);
+                if (targetElement) {
+                    targetElement.textContent = 'Cannot copy!';
+                    targetElement.classList.remove('hidden', 'text-green-500');
+                    targetElement.classList.add('text-red-500', 'active');
+                    setTimeout(() => {
+                        targetElement.classList.remove('active', 'text-red-500');
+                        targetElement.classList.add('hidden', 'text-green-500');
+                        targetElement.textContent = 'Copied!';
+                    }, 3000);
+                }
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                const copiedTextElement = document.getElementById(elementId);
+                if (copiedTextElement) {
+                    document.querySelectorAll('.copied-message.active').forEach(activeMsg => {
+                        if (activeMsg.id !== elementId) {
+                            activeMsg.classList.remove('active');
+                            activeMsg.classList.add('hidden');
+                        }
+                    });
+                    copiedTextElement.classList.remove('hidden');
+                    copiedTextElement.classList.add('active');
+                    setTimeout(() => {
+                        copiedTextElement.classList.remove('active');
+                        if (!copiedTextElement.classList.contains('active')) {
+                            copiedTextElement.classList.add('hidden');
+                        }
+                    }, 2000);
+                }
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                const copiedTextElement = document.getElementById(elementId);
+                if (copiedTextElement) {
+                    copiedTextElement.textContent = 'Error!';
+                    copiedTextElement.classList.remove('hidden', 'text-green-500');
+                    copiedTextElement.classList.add('text-red-500', 'active');
+                    setTimeout(() => {
+                        copiedTextElement.classList.remove('active', 'text-red-500');
+                        copiedTextElement.classList.add('hidden', 'text-green-500');
+                        copiedTextElement.textContent = 'Copied!';
+                    }, 2000);
+                }
+            });
+        }
+
+        // --- Event Listeners ---
+        if (menuBtn) menuBtn.addEventListener('click', toggleSidebar);
+        if (closeBtn) closeBtn.addEventListener('click', toggleSidebar);
+        if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!sidebar.classList.contains('translate-x-full')) {
+                    toggleSidebar();
+                }
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            const codeOverlay = event.target.closest('.code-overlay');
+            const copyButton = event.target.closest('.copy-button');
+            const originalCopyButton = event.target.closest('.original-copy-button');
+
+            if (codeOverlay || copyButton) {
+                const codeContainer = (codeOverlay || copyButton).closest('.code-container');
+                if (codeContainer) {
+                    const textToCopy = codeContainer.getAttribute('data-code');
+                    const targetId = codeContainer.getAttribute('data-target-id');
+                    if (textToCopy && targetId) {
+                        if (!codeContainer.classList.contains('revealed')) {
+                            codeContainer.classList.add('revealed');
+                            const button = codeContainer.nextElementSibling;
+                            if (button && button.classList.contains('copy-button')) {
+                                button.textContent = 'Copy Code';
+                            }
+                        }
+                        copyToClipboard(textToCopy, targetId);
+                    }
+                }
+            } else if (originalCopyButton) {
+                const textToCopy = originalCopyButton.getAttribute('data-clipboard-text');
+                const targetId = originalCopyButton.getAttribute('data-target-id');
+                if (textToCopy && targetId) {
+                    copyToClipboard(textToCopy, targetId);
+                }
+            }
+        });
+
+        // --- Intersection Observer for About Section ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-section');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+        if (aboutSection) {
+            intersectionObserver.observe(aboutSection);
+        } else {
+            console.warn("About section element not found for Intersection Observer.");
+        }
+
+        // --- Set Current Year in Footer ---
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+    </script>
+
+</body>
+</html>
