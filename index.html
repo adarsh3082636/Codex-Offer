@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PW Courses Coupon Wallah - SAVE YOUR MONEY</title>
+    <title>PW Courses Coupon Wallah - SAVE YOUR MONEYgit </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
             100% { opacity: 0; transform: scale(0.9); }
         }
         .copied-message.active {
-            display: inline-block;
+            display: block;
             animation: fadeOut 2s forwards;
         }
         /* Ensure header nav wraps on smaller desktop screens if needed */
@@ -52,7 +52,8 @@
         .code-container {
             position: relative;
             display: inline-block;
-            width: 160px;
+            width: 100%;
+            text-align: center; /* Center the content */
         }
         .code-text {
             display: inline-block;
@@ -72,8 +73,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to right, rgba(14, 191, 255, 0.8), rgba(99, 102, 241, 0.8));
-            backdrop-filter: blur(4px);
+            background: linear-gradient(to right, #0EBFFF, #6366F1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -82,20 +82,24 @@
             font-weight: 600;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: opacity 0.3s ease, height 0.3s ease, backdrop-filter 0.3s ease;
+            transition: opacity 0.3s ease, height 0.3s ease;
         }
         .code-container.revealed .code-overlay {
             opacity: 0;
             height: 0;
-            backdrop-filter: none;
             pointer-events: none;
         }
         .code-container.revealed .code-text {
             user-select: text;
             filter: blur(0px);
         }
+        /* Position the copied message below the code text */
+        .copied-message {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+        }
         .original-copy-button {
-            width: 160px;
+            width: 100%;
             padding: 0.75rem 1rem;
             background: #2563eb;
             color: #ffffff;
@@ -109,9 +113,9 @@
             background: #1d4ed8;
         }
         .whatsapp-button {
-            width: 160px;
+            width: 100%;
             padding: 0.75rem 1rem;
-            background: #25D366;
+            background: #34C759;
             color: #ffffff;
             font-size: 1rem;
             font-weight: 600;
@@ -120,7 +124,38 @@
             transition: background-color 0.3s ease;
         }
         .whatsapp-button:hover {
-            background: #20b358;
+            background: #2DBB4E;
+        }
+        /* Flex container for buttons */
+        .button-flex {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        /* Media query for mobile devices */
+        @media (max-width: 640px) {
+            .trending-card .code-container,
+            .trending-card .whatsapp-button {
+                padding: 0.375rem 0.625rem; /* Reduced padding for smaller buttons */
+                font-size: 0.7rem; /* Smaller font size for mobile */
+                min-height: 44px; /* Ensure minimum touch target size */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .trending-card .code-overlay {
+                font-size: 0.6rem; /* Smaller font size for the overlay text */
+            }
+            .trending-card .code-text {
+                padding: 0.375rem 0.625rem; /* Match the reduced padding */
+            }
+            /* Ensure the code text size remains unchanged when revealed */
+            .trending-card .code-container.revealed .code-text {
+                font-size: 0.9rem; /* Slightly smaller font size for the coupon code */
+            }
+            .trending-card .button-flex {
+                gap: 0.25rem; /* Smaller gap between buttons */
+            }
         }
     </style>
 </head>
@@ -132,7 +167,7 @@
                 <img src="https://placehold.co/120x40/0078d7/ffffff?text=PW+Logo"
                      onerror="this.onerror=null; this.src='https://placehold.co/120x40/cccccc/ffffff?text=Logo+Error';"
                      alt="PW Logo" class="h-10 rounded">
-                <h1 class="text-xl md:text-2xl font-bold">PW Coupon Wallah</h1>
+                <h1 class="text-xl md:text-2xl font-bold">Codex Offer</h1>
             </div>
 
             <nav class="hidden md:flex space-x-2 header-nav justify-center flex-grow max-w-4xl">
@@ -201,13 +236,15 @@
                          alt="Trending JEE Course" class="w-full h-32 object-cover rounded-md mb-3">
                     <h3 class="font-semibold text-lg mb-1 text-gray-700">PW JEE Advance</h3>
                     <p class="text-green-600 font-bold text-xl mb-3">60% Off</p>
-                    <div class="w-full flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="TRENDJEE60" data-target-id="copiedTrending1">
-                            <div class="code-text select-none filter blur-sm">TRENDJEE60</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                    <div class="w-full flex flex-col items-center">
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedTrending1">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedTrending1" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedTrending1" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
         
@@ -217,13 +254,15 @@
                          alt="Trending NEET Course" class="w-full h-32 object-cover rounded-md mb-3">
                     <h3 class="font-semibold text-lg mb-1 text-gray-700">NEET Booster Pack</h3>
                     <p class="text-green-600 font-bold text-xl mb-3">45% Off</p>
-                    <div class="w-full flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="TRENDNEET45" data-target-id="copiedTrending2">
-                            <div class="code-text select-none filter blur-sm">TRENDNEET45</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                    <div class="w-full flex flex-col items-center">
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedTrending2">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedTrending2" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedTrending2" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
         
@@ -233,13 +272,15 @@
                          alt="Trending Skills Course" class="w-full h-32 object-cover rounded-md mb-3">
                     <h3 class="font-semibold text-lg mb-1 text-gray-700">PW Skills Combo</h3>
                     <p class="text-green-600 font-bold text-xl mb-3">70% Off</p>
-                    <div class="w-full flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="TRENDSKILL70" data-target-id="copiedTrending3">
-                            <div class="code-text select-none filter blur-sm">TRENDSKILL70</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                    <div class="w-full flex flex-col items-center">
+                        <div class="button-flex">
+                            <div class="code-container" data-code="SURVER0002" data-target-id="copiedTrending3">
+                                <div class="code-text select-none filter blur-sm">SURVER0002</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedTrending3" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedTrending3" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
         
@@ -249,13 +290,15 @@
                          alt="Trending GATE Course" class="w-full h-32 object-cover rounded-md mb-3">
                     <h3 class="font-semibold text-lg mb-1 text-gray-700">GATE Rank Booster</h3>
                     <p class="text-green-600 font-bold text-xl mb-3">55% Off</p>
-                    <div class="w-full flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="TRENDGATE55" data-target-id="copiedTrending4">
-                            <div class="code-text select-none filter blur-sm">TRENDGATE55</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                    <div class="w-full flex flex-col items-center">
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADISIN0004" data-target-id="copiedTrending4">
+                                <div class="code-text select-none filter blur-sm">ADISIN0004</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedTrending4" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="wrap-text whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="wrap-text whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedTrending4" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
         
@@ -274,12 +317,14 @@
                         <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">50% off</span> on PW JEE Full Course!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="JEE50" data-target-id="copiedJEE">
-                            <div class="code-text select-none filter blur-sm">JEE50</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedJEE">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedJEE" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedJEE" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -295,12 +340,14 @@
                         <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">40% off</span> on PW NEET Full Course!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="NEET40" data-target-id="copiedNEET">
-                            <div class="code-text select-none filter blur-sm">NEET40</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedNEET">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedNEET" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedNEET" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -316,12 +363,14 @@
                         <p class="text-gray-600 mb-3">Flat <span class="font-bold text-green-600">35% discount</span> for UPSC courses!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="UPSC35" data-target-id="copiedUPSC">
-                            <div class="code-text select-none filter blur-sm">UPSC35</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="UTKPRA0001" data-target-id="copiedUPSC">
+                                <div class="code-text select-none filter blur-sm">UTKPRA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedUPSC" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedUPSC" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -337,12 +386,14 @@
                         <p class="text-gray-600 mb-3">Special <span class="font-bold text-green-600">40% off</span> for early birds!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="GATE40" data-target-id="copiedGATE">
-                            <div class="code-text select-none filter blur-sm">GATE40</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADISIN0004" data-target-id="copiedGATE">
+                                <div class="code-text select-none filter blur-sm">ADISIN0004</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedGATE" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedGATE" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -354,16 +405,18 @@
                          onerror="this.onerror=null; this.src='https://placehold.co/150x100/cccccc/ffffff?text=Img+Error';"
                          alt="PW SSC Course" class="w-full md:w-36 h-auto rounded-md object-cover self-center md:self-start">
                     <div class="flex-grow">
-                        <h3 class="text-xl font-semibold text-blue-600 mb-1">SSC CGL Master Course</h3>
+                        <h3 class="text-xl font-semibold Hakuna Matata text-blue-600 mb-1">SSC CGL Master Course</h3>
                         <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">25% off</span> + Free Mock Tests!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="SSC25" data-target-id="copiedSSC">
-                            <div class="code-text select-none filter blur-sm">SSC25</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="SURVER0002" data-target-id="copiedSSC">
+                                <div class="code-text select-none filter blur-sm">SURVER0002</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedSSC" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedSSC" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -379,12 +432,14 @@
                         <p class="text-gray-600 mb-3">Save <span class="font-bold text-green-600">30%</span> on comprehensive banking prep.</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="BANK30" data-target-id="copiedBanking">
-                            <div class="code-text select-none filter blur-sm">BANK30</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedBanking">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedBanking" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedBanking" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -400,12 +455,14 @@
                         <p class="text-gray-600 mb-3">Massive <span class="font-bold text-green-600">70% off</span> on PW Skills courses!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="SKILL70" data-target-id="copiedSkills">
-                            <div class="code-text select-none filter blur-sm">SKILL70</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="SURVER0002" data-target-id="copiedSkills">
+                                <div class="code-text select-none filter blur-sm">SURVER0002</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedSkills" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedSkills" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -421,12 +478,14 @@
                         <p class="text-gray-600 mb-3">Get <span class="font-bold text-green-600">20% off</span> on all Commerce batches.</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="COMM20" data-target-id="copiedCommerce">
-                            <div class="code-text select-none filter blur-sm">COMM20</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedCommerce">
+                                <div class="code-text select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedCommerce" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedCommerce" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -442,12 +501,14 @@
                         <p class="text-gray-600 mb-3">Save <span class="font-bold text-green-600">30%</span> on Foundation courses!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="FOUND30" data-target-id="copiedFoundation">
-                            <div class="code-text select-none filter blur-sm">FOUND30</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADISIN0004" data-target-id="copiedFoundation">
+                                <div class="code-text select-none filter blur-sm">ADISIN0004</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedFoundation" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedFoundation" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -463,12 +524,14 @@
                         <p class="text-gray-600 mb-3">Grab <span class="font-bold text-green-600">15% extra off</span> on various other exam preps!</p>
                     </div>
                     <div class="w-full md:w-auto flex flex-col items-center space-y-2">
-                        <div class="code-container" data-code="OTHER15" data-target-id="copiedOthers">
-                            <div class="code-text select-none filter blur-sm">OTHER15</div>
-                            <div class="code-overlay">Click to Reveal</div>
+                        <div class="button-flex">
+                            <div class="code-container" data-code="ADAADA0001" data-target-id="copiedOthers">
+                                <div class="code-text suave select-none filter blur-sm">ADAADA0001</div>
+                                <div class="code-overlay">Click to Reveal</div>
+                                <span id="copiedOthers" class="copied-message text-green-500 hidden">Copied!</span>
+                            </div>
+                            <a href="https://wa.me/+918933964177?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
                         </div>
-                        <a href="https://wa.me/+918933968812?text=Hello!+Send+me+today+best+PW+coupon+code" target="_blank" class="whatsapp-button">Get Code on WhatsApp</a>
-                        <span id="copiedOthers" class="copied-message text-green-500 text-sm hidden">Copied!</span>
                     </div>
                 </div>
             </section>
@@ -483,7 +546,7 @@
 
     <footer class="bg-gray-800 text-gray-300 py-6 mt-12">
         <div class="container mx-auto px-4 text-center">
-            <p>© <span id="current-year"></span> PW Coupon Wallah. All rights reserved.</p>
+            <p>© <span id="current-year"></span> Codex Offer. All rights reserved.</p>
             <p class="text-sm mt-1">Disclaimer: This is an unofficial site providing coupon information.</p>
         </div>
     </footer>
@@ -593,19 +656,24 @@
             const copyButton = event.target.closest('.copy-button');
             const originalCopyButton = event.target.closest('.original-copy-button');
 
-            if (codeOverlay || copyButton) {
-                const codeContainer = (codeOverlay || copyButton).closest('.code-container');
+            if (codeOverlay) {
+                const codeContainer = codeOverlay.closest('.code-container');
                 if (codeContainer) {
                     const textToCopy = codeContainer.getAttribute('data-code');
                     const targetId = codeContainer.getAttribute('data-target-id');
                     if (textToCopy && targetId) {
                         if (!codeContainer.classList.contains('revealed')) {
                             codeContainer.classList.add('revealed');
-                            const button = codeContainer.nextElementSibling;
-                            if (button && button.classList.contains('copy-button')) {
-                                button.textContent = 'Copy Code';
-                            }
                         }
+                        copyToClipboard(textToCopy, targetId);
+                    }
+                }
+            } else if (copyButton) {
+                const codeContainer = copyButton.closest('.code-container');
+                if (codeContainer) {
+                    const textToCopy = codeContainer.getAttribute('data-code');
+                    const targetId = codeContainer.getAttribute('data-target-id');
+                    if (textToCopy && targetId) {
                         copyToClipboard(textToCopy, targetId);
                     }
                 }
